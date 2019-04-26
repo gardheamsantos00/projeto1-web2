@@ -1,4 +1,4 @@
-const client = require('mongodb').MongoClient;
+const client = require('./node_modules/mongodb').MongoClient;
 
 module.exports = class Orientacao {
     static find() {
