@@ -1,0 +1,19 @@
+{
+  "name": "projeto-01",
+  "version": "1.0.0",
+  "description": "um gerenciador de orientações para a disciplina web2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gardheamsantos00/projeto1-web2.git"
+  },
+  "author": "Gardheam Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gardheamsantos00/projeto1-web2/issues"
+  },
+  "homepage": "https://github.com/gardheamsantos00/projeto1-web2#readme"
+}
