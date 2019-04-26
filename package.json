@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/gardheamsantos00/projeto1-web2/issues"
   },
-  "homepage": "https://github.com/gardheamsantos00/projeto1-web2#readme"
+  "homepage": "https://github.com/gardheamsantos00/projeto1-web2#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongodb": "^3.2.3"
+  }
 }
