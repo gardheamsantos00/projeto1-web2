@@ -4,6 +4,7 @@
   "description": "um gerenciador de orientações para a disciplina web2",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,7 +18,13 @@
   },
   "homepage": "https://github.com/gardheamsantos00/projeto1-web2#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
     "express": "^4.16.4",
-    "mongodb": "^3.2.3"
+    "express-handlebars": "^3.0.2",
+    "express-session": "^1.16.1",
+    "handlebars": "^4.1.2",
+    "mongodb": "^3.2.3",
+    "mongoose": "^5.5.9"
   }
 }
