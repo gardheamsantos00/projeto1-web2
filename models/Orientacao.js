@@ -7,11 +7,17 @@ const Orientacao = new Schema({
         type: String,
         required: true
     },
+    
+    orientador: {
+        type: Schema.Types.ObjectId,
+        ref: "professores",
+        required: true
+    },
     date: {
         type:Date,
         default: Date.now()
     },
-    
+
    // actions: [{ type: Schema.Types.ObjectId, ref: 'Professor'}]
 
 });

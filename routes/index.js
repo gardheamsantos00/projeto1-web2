@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 require("../models/Orientacao");
 const Orientacao = mongoose.model("orientacoes");
 
+require("../models/Professor");
+const Professor = mongoose.model("professores");
 
 
 var erros = [];
@@ -17,10 +19,10 @@ router.get('/' , (req, res)=>{
 });
 
 
-//LISTAR ORIENTAÇÃO
+//LISTAR ORIENTAÇÃO --------------------------------------------------------------
 router.get('/orientacoes', (req, res)=>{
 
-    Orientacao.find().sort({date: 'desc'}).then( (orientacoes) => {
+    Orientacao.find().populate("orientador").sort({date: 'desc'}).then( (orientacoes) => {
 
         res.render("admin/orientacao", { orientacoes: orientacoes});
     }).catch( (error) =>{
@@ -30,14 +32,22 @@ router.get('/orientacoes', (req, res)=>{
 });
 
 router.get('/orientacoes/add', (req, res)=>{
-    res.render("admin/addorientacao");
+
+    Professor.find().then( (professores) =>{
+
+        res.render("admin/addorientacao", {professores: professores});
+
+    }).catch( (error) => {
+        req.flash("error_msg", "Houve um erro ao carregar o formulário");
+        res.redirect("/auth");
+    });
 });
 
 
-//CADASTRAR ORIENTAÇÃO
+//CADASTRAR ORIENTAÇÃO -------------------------------------------------------
 router.post('/orientacoes/nova', (req, res)=>{
     
-
+        
     //valida se o nome vier vazio null undefine
     if(!req.body.nome || 
         req.body.nome == null || 
@@ -56,7 +66,8 @@ router.post('/orientacoes/nova', (req, res)=>{
 
         //cria a orientacao no bd
         const novaOrientacao = {
-            nome : req.body.nome
+            nome : req.body.nome,
+            orientador : req.body.orientador
         }
     
         new Orientacao(novaOrientacao).save().then( ()=>{
@@ -73,7 +84,7 @@ router.post('/orientacoes/nova', (req, res)=>{
  
 });
 
-//EDIT ORIENTAÇÃO
+//Busca um orientacao pra EDIT  -------------------------------------------------------
 router.get("/orientacoes/edit/:id", (req,res) => {
     Orientacao.findOne({_id:req.params.id}).then( (orientacao) =>{
         
@@ -86,7 +97,7 @@ router.get("/orientacoes/edit/:id", (req,res) => {
 });
 
 
-//Edita a orientacao e salva 
+//Edita a orientacao e salva  ---------------------------------------------
 router.post("/orientacao/edit", (req,res)=>{
     Orientacao.findOne({_id:req.body.id}).then( (orientacao) =>{
 
@@ -127,8 +138,7 @@ router.post("/orientacao/edit", (req,res)=>{
     });
 })
 
-
-
+//DEL ORIENTAÇÃO ------------------------------------------
 router.post("/orientacao/del" , (req,res) => {
     Orientacao.deleteOne({_id: req.body.id}).then( () => {
         req.flash("success_msg", "Orientacao deletada com sucesso!");
@@ -137,6 +147,55 @@ router.post("/orientacao/del" , (req,res) => {
         req.flash("error_msg", "Houve um erro ao tentar deletar a orientação");
         res.redirect("/auth/orientacoes");
     });
+});
+
+
+
+//ROTAS PROFESSOR ------------------------------------------------------
+
+
+
+
+// FIND NA LISTA DE PROFESSORES-----------------------------------------
+router.get("/professores" , (req,res)=> {
+    
+    Professor.find().sort({nome: 'asc'}).then( (professores) => {
+
+        res.render("admin/professores", { professores: professores});
+        
+    }).catch( (error) =>{
+        req.flash("error_msg", "Houve um erro ao listar os professores");
+        res.redirect("/auth");
+    });
+});
+
+
+
+// ROTA QUE RENDERIZA A PAG DE FORM DE PROFESSOR ---------------------------------
+router.get("/professores/add", (req,res)=>{
+    res.render("admin/addprofessor");
+});
+
+
+
+// CAD DE PROFESSOR -------------------------------------------------------------
+router.post("/professores/novo", (req,res) => {
+
+        //cria a professor no bd
+        const novoProfessor = {
+            nome : req.body.nome,
+            especialidade : req.body.especialidade
+        }
+    
+        new Professor(novoProfessor).save().then( ()=>{
+            req.flash("success_msg" , "Professor salvo com sucesso!")
+            res.redirect("/auth/professores");
+        }).catch( (error)=>{
+            req.flash("error_msg" , "Error ao tentar salvar professor.")
+            res.redirect("/auth");
+            console.log(erro);
+        });
+
 });
 
 

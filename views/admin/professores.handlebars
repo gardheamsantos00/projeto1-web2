@@ -1,31 +1,31 @@
-<h2>Lista de Orientações</h2>
+<h2>Lista de Professores</h2>
 <hr>
 
 
-<a href="/auth/orientacoes/add">
-<button class="btn btn-success"> Nova Orientação</button>
+<a href="/auth/professores/add">
+<button class="btn btn-success"> Novo Professor</button>
 
 </a>
 
-{{#each orientacoes}}
+
+{{#each professores}}
 
     <div class="card mt-4 hoverCard"  >
         <div class="card-body" style="display:flex; 
         justify-content: space-between; width:100%; align-items:center; ">
             <div>
                 <h4>{{nome}}</h4>
-            <small> Orientador:  {{orientador.nome}}</small>  </br>  
-            <small> Data criação:  {{date}}</small>
+               <small> Especialidade:  {{especialidade}}</small>
             
             </div>
             
 
             <div style="display:flex; flex-direction:column; align-items:center; padding:0px">
-                <a href="/auth/orientacoes/edit/{{_id}}"> 
+                <a href=""> 
                 <button class="btn btn-outline-info " > Edit </button>
             </a>
 
-            <form action="/auth/orientacao/del" method="POST">
+            <form action="" method="POST">
                     <input type="hidden" name="id" value="{{_id}}">
                     <button type="submit" class="btn btn-outline-danger mt-2" > Delete </button>
             </form>
@@ -35,6 +35,6 @@
     </div>
 {{else}}
     
-    <h3> Nenhuma orientação cadastrada !</h3>
+    <h3> Nenhum professor cadastrado!</h3>
 
 {{/each}}

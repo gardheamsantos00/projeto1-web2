@@ -9,10 +9,21 @@
     <div class="card-body">
 
 <form action="/auth/orientacoes/nova" method="POST">
-    <label for="nome"> Nome </label>
-    <input class="form-control" type="text" id="nome" name="nome" placeholder="Digite o nome da orientacao" >
-    <br>
-    <button type="submit" class="btn btn-success"> criar orientacao</button>
+    <label for="nome"> Nome: </label>
+    <input class="form-control" type="text" 
+    id="nome" name="nome" placeholder="Digite o nome da orientacao" required>
+    
+    <label for="nome"> Orientador: </label>
+    <select name="orientador" class="custom-select" required>
+        {{#each professores}}
+              <option value="{{_id}}">{{nome}}</option>
+        {{else}}
+              <option value="0">nenhum orientador selecionado</option>
+        {{/each}}
+    </select>
+    
+
+    <button type="submit" class="btn btn-success mt-4"> criar orientacao</button>
 </form>
 </div>
 </div>
