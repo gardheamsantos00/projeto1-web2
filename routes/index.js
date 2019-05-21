@@ -31,6 +31,7 @@ router.get('/orientacoes', (req, res)=>{
     });
 });
 
+// RENDER PAGE FORM ORIENTACOES -----------------------------------------------------
 router.get('/orientacoes/add', (req, res)=>{
 
     Professor.find().then( (professores) =>{
@@ -86,9 +87,18 @@ router.post('/orientacoes/nova', (req, res)=>{
 
 //Busca um orientacao pra EDIT  -------------------------------------------------------
 router.get("/orientacoes/edit/:id", (req,res) => {
+
     Orientacao.findOne({_id:req.params.id}).then( (orientacao) =>{
         
-        res.render("admin/editorientacao", {orientacao:orientacao});
+        Professor.find().then((professores) =>{
+            
+            //passa pra view as orientações e professores da busca
+            res.render("admin/editorientacao", 
+            {orientacao:orientacao , professores: professores});
+        
+        }).catch( (error)=>{
+            req.flash("error_msg", "Erro ao listar os professores")
+        });
 
     }).catch( (error) => {
         req.flash("error_msg", "Esta orientação não existe");
@@ -99,6 +109,10 @@ router.get("/orientacoes/edit/:id", (req,res) => {
 
 //Edita a orientacao e salva  ---------------------------------------------
 router.post("/orientacao/edit", (req,res)=>{
+
+    
+
+
     Orientacao.findOne({_id:req.body.id}).then( (orientacao) =>{
 
     //valida se o nome vier vazio null undefine
@@ -118,6 +132,7 @@ router.post("/orientacao/edit", (req,res)=>{
         }else{
             // falta as validações de campos , fazer depois!
         orientacao.nome = req.body.nome;
+        orientacao.orientador = req.body.orientador;
 
         orientacao.save().then( ()=> {
             req.flash("success_msg" , "Orientação editada com sucesso");

@@ -13,8 +13,17 @@
     <label for="nome"> Nome </label>
     <input class="form-control" type="text" id="nome" 
     name="nome" placeholder="Digite o nome da orientacao" value="{{orientacao.nome}}">
-    <br>
-    <button type="submit" class="btn btn-info"> Editar orientacao</button>
+    
+    <label for="nome"> Orientador: </label>
+    <select name="orientador" class="custom-select" required>
+        {{#each professores}}
+              <option value="{{_id}}">{{nome}}</option>
+        {{else}}
+              <option value="0">nenhum orientador selecionado</option>
+        {{/each}}
+    </select>
+
+    <button type="submit" class="btn btn-info mt-4"> Editar orientacao</button>
 </form>
 </div>
 </div>

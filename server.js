@@ -7,6 +7,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 const indexRoutes = require("./routes/index");
+const usuarios = require("./routes/usuario");
 
 const path = require('path');
 
@@ -56,7 +57,12 @@ mongoose.connect("mongodb://localhost/web2-app1",{ useNewUrlParser: true }).then
 
 //rotas 
 //prefixo do grupo de rotas /auth
+app.get('/', (req,res)=>{
+    res.render("home");
+});
+
 app.use('/auth' , indexRoutes );
+app.use('/usuarios', usuarios);
 
 //iniciar servidor
 app.listen(PORT, ()=> {
